@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ankitdubey021.draggingtestapp.ui.theme.DraggingTestAppTheme
+import com.ankitdubey021.draggingtestapp.ui.theme.Purple200
 import com.ankitdubey021.draggingtestapp.ui.theme.Purple700
 import com.ankitdubey021.draggingtestapp.ui.theme.bgDark
 
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                             contentAlignment = Alignment.Center
                         ){
                             val progress = 10
-                            PieChart(70, progressColor = Color(0xff008000))
+                            PieChart(70, progressColor  = Color.Green)
                         }
                         Box(
                             modifier = Modifier
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                                 .background(bgDark),
                             contentAlignment = Alignment.Center
                         ){
-                            val progress = 20
+                            val progress = 50
                             DonutChart(progress)
                             Text(
                                 text = "$progress%",
@@ -67,8 +68,8 @@ class MainActivity : AppCompatActivity() {
                                 .background(bgDark),
                             contentAlignment = Alignment.Center
                         ){
-                            val progress = 45
-                            DonutChart(progress, strokeGap = 10, progressColor = Color.Yellow)
+                            val progress = 100
+                            DonutChart(progress, strokeGap = 8, progressColor = Color.Yellow)
                             Text(
                                 text = "$progress%",
                                 style = TextStyle(

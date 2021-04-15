@@ -109,7 +109,7 @@ fun CountDownTimer() {
 
 const val startRadiusFraction = 0.5f
 const val endRadiusFraction = 0.75f
-const val tickWidth = 9f
+const val tickWidth = 5f
 
 @Composable
 fun TickMark(

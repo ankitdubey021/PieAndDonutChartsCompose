@@ -8,9 +8,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.core.graphics.rotationMatrix
+import com.ankitdubey021.draggingtestapp.ui.theme.Purple200
 import com.ankitdubey021.draggingtestapp.ui.theme.secondaryProgressColor
 import kotlin.math.PI
 import kotlin.math.cos
@@ -42,7 +44,6 @@ private fun CircularChart(
         contentAlignment = Alignment.Center
     ) {
         val radianProgress = (360 * percentProgress) / 100
-
         for (i in 0 until 360) {
             if(donut) {
                 DonutTickMark(
@@ -55,7 +56,7 @@ private fun CircularChart(
             }
         }
 
-        for (i in 0 until radianProgress) {
+        for (i in 0 until radianProgress step strokeGap) {
             if(donut) {
                 DonutTickMark(
                     angle = i,
@@ -82,6 +83,9 @@ private fun DonutTickMark(
                 val theta = angle * PI.toFloat() / 180f
                 val startRadius = size.width / 2 * startRadiusFraction
                 val endRadius = size.width / 2 * endRadiusFraction
+
+                /*val sweep = Brush.sweepGradient(progressColor)
+                val offBrush = SolidColor(secondaryProgressColor)*/
 
                 val startPos = Offset(
                     cos(theta) * startRadius,
@@ -115,6 +119,9 @@ private fun PieTickMark(
             .drawBehind {
                 val theta = angle * PI.toFloat() / 180f
                 val endRadius = size.width / 2 * endRadiusFraction
+
+                /*val sweep = Brush.sweepGradient(progressColor)
+                val offBrush = SolidColor(secondaryProgressColor)*/
 
                 val startPos = Offset(
                     cos(theta) ,
