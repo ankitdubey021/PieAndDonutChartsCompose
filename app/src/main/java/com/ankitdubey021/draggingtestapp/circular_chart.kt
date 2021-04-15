@@ -6,9 +6,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.core.graphics.rotationMatrix
 import com.ankitdubey021.draggingtestapp.ui.theme.secondaryProgressColor
 import kotlin.math.PI
 import kotlin.math.cos
@@ -35,12 +37,12 @@ private fun CircularChart(
 ) {
     Box(
         Modifier
+            .rotate(270f)
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         val radianProgress = (360 * percentProgress) / 100
-        val positivePoints  = 270 + radianProgress
-        val extraPoint = positivePoints - 360
+
         for (i in 0 until 360) {
             if(donut) {
                 DonutTickMark(
@@ -53,7 +55,7 @@ private fun CircularChart(
             }
         }
 
-        for (i in 270 until (if(positivePoints <= 360) positivePoints else 360) step strokeGap) {
+        for (i in 0 until radianProgress) {
             if(donut) {
                 DonutTickMark(
                     angle = i,
@@ -61,20 +63,7 @@ private fun CircularChart(
                     progressColor = progressColor
                 )
             }else{
-                PieTickMark(angle = i, on = true, progressColor = progressColor)
-            }
-        }
-        if(extraPoint > 0){
-            for (i in 0 until extraPoint step strokeGap) {
-                if(donut) {
-                    DonutTickMark(
-                        angle = i,
-                        on = true,
-                        progressColor = progressColor
-                    )
-                }else{
-                    PieTickMark(angle = i, on = true, progressColor = progressColor)
-                }
+                PieTickMark(angle = i, on = true,progressColor = progressColor)
             }
         }
     }
