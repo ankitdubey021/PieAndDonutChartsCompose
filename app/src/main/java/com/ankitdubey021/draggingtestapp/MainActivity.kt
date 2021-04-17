@@ -33,45 +33,33 @@ class MainActivity : AppCompatActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
+
+                        val dataSet = listOf(
+                            DataSet(25F,Color(0xFFa05007)),
+                            DataSet(35F,Color(0xFFc86409)),
+                            DataSet(40F,Color(0xFFdea26b))
+                        )
+
                         Box(
                             modifier = Modifier
                                 .width(200.dp)
-                                .height(200.dp)
-                                .background(bgDark),
+                                .height(200.dp),
                             contentAlignment = Alignment.Center
                         ){
-                            val progress = 10
-                            PieChart(70, progressColor  = Color.Green)
-                        }
-                        Box(
-                            modifier = Modifier
-                                .width(200.dp)
-                                .height(200.dp)
-                                .background(bgDark),
-                            contentAlignment = Alignment.Center
-                        ){
-                            val progress = 50
-                            DonutChart(progress)
-                            Text(
-                                text = "$progress%",
-                                style = TextStyle(
-                                    color = Color.White,
-                                    fontSize = 20.sp
-                                )
-                            )
+
+                            PieChart(dataSet)
                         }
 
                         Box(
                             modifier = Modifier
                                 .width(200.dp)
-                                .height(200.dp)
-                                .background(bgDark),
+                                .height(200.dp),
                             contentAlignment = Alignment.Center
                         ){
-                            val progress = 100
-                            DonutChart(progress, strokeGap = 8, progressColor = Color.Yellow)
+
+                            DonutChart(dataSet = dataSet)
                             Text(
-                                text = "$progress%",
+                                text = "100%",
                                 style = TextStyle(
                                     color = Color.White,
                                     fontSize = 20.sp

@@ -19,23 +19,22 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 @Composable
-fun PieChart(percentProgress : Int, progressColor : Color = Color.Red){
-    CircularChart(percentProgress = percentProgress, donut = false, progressColor = progressColor)
+fun PieChart(dataSet: List<DataSet>){
+    CircularChart(dataSet, false)
 }
 
 @Composable
-fun DonutChart(percentProgress : Int, strokeGap : Int = 1, progressColor : Color = Color.Red){
+fun DonutChart(dataSet: List<DataSet>, strokeGap : Int = 1){
     val gap = if(strokeGap < 1 || strokeGap > 10) 1 else strokeGap
-    CircularChart(percentProgress = percentProgress, donut = true, strokeGap = gap, progressColor)
+    CircularChart(dataSet, donut = true, strokeGap = gap)
 }
 
 
 @Composable
 private fun CircularChart(
-    percentProgress : Int,
+    dataSet: List<DataSet>,
     donut : Boolean,
-    strokeGap: Int = 1,
-    progressColor: Color
+    strokeGap: Int = 1
 ) {
     Box(
         Modifier
@@ -43,30 +42,40 @@ private fun CircularChart(
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        val radianProgress = (360 * percentProgress) / 100
+
+        //fill with progress background color
         for (i in 0 until 360) {
             if(donut) {
                 DonutTickMark(
                     angle = i,
                     on = false,
-                    progressColor = progressColor
+                    progressColor = secondaryProgressColor
                 )
             }else{
-                PieTickMark(angle = i, on = false,progressColor = progressColor)
+                PieTickMark(angle = i, on = false,progressColor = secondaryProgressColor)
             }
+        }
+        var previousPercent = 0
+        var startingIndex = 0
+        //Now fill with progress
+        for(ds in dataSet){
+            previousPercent += ds.percent.toInt()
+            val radianProgress = ((360 * previousPercent) / 100)
+
+            for (i in startingIndex until radianProgress step strokeGap) {
+                if(donut) {
+                    DonutTickMark(
+                        angle = i,
+                        on = true,
+                        progressColor = ds.color
+                    )
+                }else{
+                    PieTickMark(angle = i, on = true,progressColor = ds.color)
+                }
+            }
+            startingIndex = radianProgress
         }
 
-        for (i in 0 until radianProgress step strokeGap) {
-            if(donut) {
-                DonutTickMark(
-                    angle = i,
-                    on = true,
-                    progressColor = progressColor
-                )
-            }else{
-                PieTickMark(angle = i, on = true,progressColor = progressColor)
-            }
-        }
     }
 }
 
@@ -137,7 +146,7 @@ private fun PieTickMark(
                     center + startPos,
                     center + endPos,
                     tickWidth,
-                    StrokeCap.Square
+                    StrokeCap.Round
                 )
             }
     )
